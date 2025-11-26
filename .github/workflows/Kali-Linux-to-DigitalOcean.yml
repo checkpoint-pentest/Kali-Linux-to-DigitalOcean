@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Fetch Latest Kali Linux Version
         id: fetch_version
@@ -44,6 +46,9 @@ jobs:
           fi
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
+      - name: Pull latest changes
+        run: git pull --rebase origin main
+        
       - name: Commit new version
         run: |
           git config user.name "github-actions[bot]"
